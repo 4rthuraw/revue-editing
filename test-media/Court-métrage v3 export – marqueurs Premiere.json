@@ -1,0 +1,30 @@
+{
+  "format" : "revue-montage-premiere",
+  "frameRate" : {
+    "denominator" : 1,
+    "numerator" : 25
+  },
+  "markers" : [
+    {
+      "color" : "blue",
+      "colorIndex" : 6,
+      "comments" : "Ambiance qui saute au raccord, ajouter un fondu",
+      "frame" : 91,
+      "name" : "Son",
+      "ticks" : "924618240000",
+      "timecode" : "01:00:03:16"
+    },
+    {
+      "color" : "red",
+      "colorIndex" : 1,
+      "comments" : "faire tatata",
+      "frame" : 97,
+      "name" : "Rythme",
+      "ticks" : "985582080000",
+      "timecode" : "01:00:03:22"
+    }
+  ],
+  "reviewName" : "Court-métrage v3 export",
+  "ticksPerFrame" : "10160640000",
+  "version" : 1
+}

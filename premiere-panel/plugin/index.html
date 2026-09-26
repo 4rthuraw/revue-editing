@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { margin: 0; padding: 12px; color: #e8e8ec; background: transparent; font-size: 12px; }
+    h1 { font-size: 13px; margin: 0 0 4px; font-weight: 600; }
+    .muted { color: #8b8b95; }
+    .row { display: flex; align-items: center; gap: 8px; }
+    .stack > * + * { margin-top: 10px; }
+    button {
+      border: none; border-radius: 6px; padding: 7px 12px; font-size: 12px; font-weight: 600;
+      color: #fff; background: #5b53ff;
+    }
+    button.ghost { background: #2c2c34; color: #e8e8ec; }
+    button:disabled { opacity: 0.4; }
+    #summary { padding: 10px; border-radius: 8px; background: #1d1d23; border: 1px solid #2c2c34; }
+    #list { max-height: 100%; overflow-y: auto; }
+    .marker { display: flex; gap: 8px; padding: 7px 2px; border-bottom: 1px solid #26262c; }
+    .dot { width: 9px; height: 9px; border-radius: 5px; margin-top: 3px; flex: none; }
+    .tc { font-family: Menlo, monospace; color: #b3aeff; font-size: 11px; }
+    .name { font-weight: 600; margin-left: 6px; }
+    .text { margin-top: 2px; color: #d6d6dc; white-space: pre-wrap; }
+    .dup { opacity: 0.45; }
+    #status { padding: 8px 10px; border-radius: 6px; display: none; }
+    #status.info { display: block; background: #27244d; color: #d4d1ff; }
+    #status.ok { display: block; background: #16352a; color: #9ff0c0; }
+    #status.warn { display: block; background: #3d3115; color: #ffd97f; }
+    #status.error { display: block; background: #3d1a1a; color: #ff8b8b; }
+  </style>
+</head>
+<body>
+  <div class="stack">
+    <div>
+      <h1>Importer les notes de revue</h1>
+      <div class="muted">Fichier « … marqueurs Premiere.json » exporté par Revue Montage.</div>
+    </div>
+    <div class="row">
+      <button id="choose" class="ghost">Choisir un fichier de notes…</button>
+    </div>
+    <div id="summary" style="display:none"></div>
+    <div id="status"></div>
+    <div class="row">
+      <button id="import" disabled>Ajouter à la séquence active</button>
+    </div>
+    <div id="list"></div>
+  </div>
+  <script src="main.js"></script>
+</body>
+</html>
