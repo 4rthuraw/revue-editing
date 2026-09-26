@@ -1,8 +1,0 @@
-TITLE: Court-métrage v3 export
-FCM: NON-DROP FRAME
-
-001  001      V     C        01:00:03:16 01:00:03:17 01:00:03:16 01:00:03:17
- |C:ResolveColorBlue |M:[Son] Ambiance qui saute au raccord, ajouter un fondu |D:1
-
-002  001      V     C        01:00:03:22 01:00:03:23 01:00:03:22 01:00:03:23
- |C:ResolveColorRed |M:[Rythme] faire tatata |D:1

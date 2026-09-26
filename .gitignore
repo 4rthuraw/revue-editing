@@ -1,0 +1,20 @@
+# Swift Package Manager
+.build/
+.swiftpm/
+Package.resolved
+
+# Produits construits (build-app.sh, install.sh) : à publier dans les Releases GitHub
+dist/
+premiere-panel/dist/
+
+# Médias de test (vidéos lourdes, fichiers de revue avec des chemins personnels)
+test-media/
+*.mp4
+*.mov
+*.revue.json
+
+# macOS / éditeurs
+.DS_Store
+xcuserdata/
+.vscode/
+.idea/
