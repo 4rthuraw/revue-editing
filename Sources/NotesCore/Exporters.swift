@@ -110,7 +110,7 @@ public enum PremiereJSONExporter {
             version: 1,
             reviewName: review.title,
             frameRate: rate,
-            ticksPerFrame: String(rate.premiereTicks(atFrame: 1)),
+            ticksPerFrame: String(rate.premiereTicksPerFrame),
             markers: markers
         )
     }

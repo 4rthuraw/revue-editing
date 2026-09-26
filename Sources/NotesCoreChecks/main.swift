@@ -68,6 +68,8 @@ check(r25.frame(atSeconds: 2.0), 50, "2 s en 25")
 check(r25.frame(atSeconds: 1.999), 49, "juste avant 2 s")
 check(r2398.premiereTicks(atFrame: 1), 10_594_584_000, "ticks 23.976")
 check(r24.premiereTicks(atFrame: 1), 10_584_000_000, "ticks 24")
+check(r5994.premiereTicks(atFrame: 216_000), 216_000 * 4_237_833_600, "ticks 1 h en 59.94 (pas de dépassement)")
+check(r2398.premiereTicks(atFrame: 100_000), 100_000 * 10_594_584_000, "ticks 70 min en 23.976 (pas de dépassement)")
 
 // Export EDL Resolve
 let rythme = NoteCategory.defaults[0], son = NoteCategory.defaults[1]
