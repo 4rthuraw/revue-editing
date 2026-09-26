@@ -9,7 +9,7 @@
   <img alt="macOS 14+" src="https://img.shields.io/badge/macOS-14%2B-black?logo=apple">
   <img alt="Swift 6" src="https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white">
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-5B53FF"></a>
-  <a href="https://ko-fi.com/TON-PSEUDO-KOFI"><img alt="Support on Ko-fi" src="https://img.shields.io/badge/support-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white"></a>
+  <a href="https://ko-fi.com/arthuraw_"><img alt="Support on Ko-fi" src="https://img.shields.io/badge/support-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white"></a>
 </p>
 
 <p align="center"><a href="README.md">🇫🇷 Français</a> · 🇬🇧 English</p>
@@ -99,7 +99,7 @@ in Resolve and Premiere. Bugs may remain, though: if you find one,
 Revue Montage is **free and open source**. If it saves you time and you'd like to say thanks,
 you can leave a small tip:
 
-<a href="https://ko-fi.com/TON-PSEUDO-KOFI"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support on Ko-fi"></a>
+<a href="https://ko-fi.com/arthuraw_"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support on Ko-fi"></a>
 
 Starring the repo ⭐ or telling other editors about it helps too!
 

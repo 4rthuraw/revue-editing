@@ -9,7 +9,7 @@
   <img alt="macOS 14+" src="https://img.shields.io/badge/macOS-14%2B-black?logo=apple">
   <img alt="Swift 6" src="https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white">
   <a href="LICENSE"><img alt="Licence MIT" src="https://img.shields.io/badge/licence-MIT-5B53FF"></a>
-  <a href="https://ko-fi.com/TON-PSEUDO-KOFI"><img alt="Soutenir sur Ko-fi" src="https://img.shields.io/badge/soutenir-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white"></a>
+  <a href="https://ko-fi.com/arthuraw_"><img alt="Soutenir sur Ko-fi" src="https://img.shields.io/badge/soutenir-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white"></a>
 </p>
 
 <p align="center">🇫🇷 Français · <a href="README.en.md">🇬🇧 English</a></p>
@@ -97,7 +97,7 @@ automatiques, et je l'ai testé dans Resolve et Premiere. Mais il peut rester de
 Revue Montage est **gratuit et open source**. S'il te fait gagner du temps et que tu as envie de me remercier,
 tu peux me laisser un petit tip :
 
-<a href="https://ko-fi.com/TON-PSEUDO-KOFI"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Soutenir sur Ko-fi"></a>
+<a href="https://ko-fi.com/arthuraw_"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Soutenir sur Ko-fi"></a>
 
 Mettre une ⭐ au dépôt ou parler du logiciel à d'autres monteurs, ça aide aussi !
 
