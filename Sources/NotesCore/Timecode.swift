@@ -46,8 +46,15 @@ public struct FrameRate: Codable, Hashable, Sendable {
         Double(frame) * Double(denominator) / Double(numerator)
     }
 
+    /// Durée d'une image en ticks (entière pour toutes les cadences courantes, 23.976 comprise).
+    public var premiereTicksPerFrame: Int {
+        FrameRate.premiereTicksPerSecond * denominator / numerator
+    }
+
+    /// On multiplie par la durée d'une image plutôt que de diviser à la fin :
+    /// `frame × ticks/s × 1001` dépasserait la capacité d'un Int après ~36 000 images en 23.976/29.97/59.94.
     public func premiereTicks(atFrame frame: Int) -> Int {
-        frame * FrameRate.premiereTicksPerSecond * denominator / numerator
+        frame * premiereTicksPerFrame
     }
 }
 
