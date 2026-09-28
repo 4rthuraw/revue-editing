@@ -9,14 +9,12 @@
   <img alt="macOS 14+" src="https://img.shields.io/badge/macOS-14%2B-black?logo=apple">
   <img alt="Swift 6" src="https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white">
   <a href="LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-5B53FF"></a>
-  <a href="https://ko-fi.com/TON-PSEUDO-KOFI"><img alt="Support on Ko-fi" src="https://img.shields.io/badge/support-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white"></a>
+  <a href="https://ko-fi.com/arthuraw_"><img alt="Support on Ko-fi" src="https://img.shields.io/badge/support-Ko--fi-FF5E5B?logo=ko-fi&logoColor=white"></a>
 </p>
 
 <p align="center"><a href="README.md">🇫🇷 Français</a> · 🇬🇧 English</p>
 
-<!-- Screenshot: add docs/images/revue.png (or .gif), then remove the comment markers.
-<p align="center"><img src="docs/images/revue.png" alt="Revue Montage: video player on the left, colored notes on the right" width="900"></p>
--->
+<p align="center"><img src="docs/images/revue.webp" alt="Revue Montage: video player on the left, colored notes on the right" width="900"></p>
 
 > ℹ️ The app interface is in **French** for now. The shortcuts and workflow below work the same way.
 
@@ -65,9 +63,13 @@ cd revue-editing
 Notes are saved automatically to `<video>.revue.json`, next to the video.
 Settings (⌘,): auto-pause while typing, sequence start timecode, drop-frame, categories.
 
+<p align="center"><img src="docs/images/reglages.png" alt="Settings: auto-pause, start timecode, drop-frame" width="420"></p>
+
 ## Export to your editing software
 
 **Exporter les marqueurs ▾** (or ⌘E / ⇧⌘E) writes the file next to the video.
+
+<p align="center"><img src="docs/images/export.webp" alt="Confirmation banner: 6 markers exported for Resolve" width="700"></p>
 
 ### DaVinci Resolve
 
@@ -99,7 +101,7 @@ in Resolve and Premiere. Bugs may remain, though: if you find one,
 Revue Montage is **free and open source**. If it saves you time and you'd like to say thanks,
 you can leave a small tip:
 
-<a href="https://ko-fi.com/TON-PSEUDO-KOFI"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support on Ko-fi"></a>
+<a href="https://ko-fi.com/arthuraw_"><img src="https://ko-fi.com/img/githubbutton_sm.svg" alt="Support on Ko-fi"></a>
 
 Starring the repo ⭐ or telling other editors about it helps too!
 
