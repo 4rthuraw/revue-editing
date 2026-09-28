@@ -48,7 +48,7 @@ all that's left is to work through them one by one.
 (run `xcode-select --install` in Terminal if you don't have them).
 
 ```bash
-git clone https://github.com/heyy-tatious/revue-editing.git
+git clone https://github.com/4rthuraw/revue-editing.git
 cd revue-editing
 ./scripts/build-app.sh          # builds dist/Revue Montage.app → drag it into Applications
 ./premiere-panel/install.sh     # (optional) installs the "Importer les notes" panel in Premiere Pro (25.6+)
@@ -96,7 +96,7 @@ my testing and my feedback.
 
 The core (timecode math, Resolve and Premiere exports) is covered by automated checks, and I've tested it
 in Resolve and Premiere. Bugs may remain, though: if you find one,
-[open an issue](https://github.com/heyy-tatious/revue-editing/issues), it really helps.
+[open an issue](https://github.com/4rthuraw/revue-editing/issues), it really helps.
 
 ## ☕ Support the project
 

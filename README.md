@@ -45,7 +45,7 @@ placés à l'image près** : il n'y a plus qu'à les traiter un par un.
 (`xcode-select --install` dans le Terminal si tu ne les as pas).
 
 ```bash
-git clone https://github.com/heyy-tatious/revue-editing.git
+git clone https://github.com/4rthuraw/revue-editing.git
 cd revue-editing
 ./scripts/build-app.sh          # construit dist/Revue Montage.app → à glisser dans Applications
 ./premiere-panel/install.sh     # (optionnel) installe le panneau « Importer les notes » dans Premiere Pro (25.6+)
@@ -93,7 +93,7 @@ de mes essais et de mes retours.
 
 Le cœur du logiciel (calcul des timecodes, exports Resolve et Premiere) est couvert par des vérifications
 automatiques, et je l'ai testé dans Resolve et Premiere. Mais il peut rester des bugs : si tu en trouves un,
-[ouvre une issue](https://github.com/heyy-tatious/revue-editing/issues), ça m'aide beaucoup.
+[ouvre une issue](https://github.com/4rthuraw/revue-editing/issues), ça m'aide beaucoup.
 
 ## ☕ Soutenir le projet
 
