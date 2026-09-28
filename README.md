@@ -14,9 +14,7 @@
 
 <p align="center">🇫🇷 Français · <a href="README.en.md">🇬🇧 English</a></p>
 
-<!-- Capture d'écran : ajouter docs/images/revue.png (ou .gif) puis retirer les marques de commentaire.
-<p align="center"><img src="docs/images/revue.png" alt="Revue Montage : lecteur vidéo à gauche, notes colorées à droite" width="900"></p>
--->
+<p align="center"><img src="docs/images/revue.webp" alt="Revue Montage : lecteur vidéo à gauche, notes colorées à droite" width="900"></p>
 
 ## Pourquoi ce logiciel ?
 
@@ -63,9 +61,13 @@ cd revue-editing
 Les notes sont sauvegardées automatiquement dans `<vidéo>.revue.json`, à côté de la vidéo.
 Réglages (⌘,) : pause auto en écrivant, timecode de départ de la séquence, drop-frame, catégories.
 
+<p align="center"><img src="docs/images/reglages.png" alt="Réglages : pause auto, timecode de départ, drop-frame" width="420"></p>
+
 ## Export vers ton logiciel de montage
 
 **Exporter les marqueurs ▾** (ou ⌘E / ⇧⌘E) écrit le fichier à côté de la vidéo.
+
+<p align="center"><img src="docs/images/export.webp" alt="Bandeau de confirmation : 6 marqueurs exportés pour Resolve" width="700"></p>
 
 ### DaVinci Resolve
 

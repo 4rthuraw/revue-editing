@@ -14,9 +14,7 @@
 
 <p align="center"><a href="README.md">🇫🇷 Français</a> · 🇬🇧 English</p>
 
-<!-- Screenshot: add docs/images/revue.png (or .gif), then remove the comment markers.
-<p align="center"><img src="docs/images/revue.png" alt="Revue Montage: video player on the left, colored notes on the right" width="900"></p>
--->
+<p align="center"><img src="docs/images/revue.webp" alt="Revue Montage: video player on the left, colored notes on the right" width="900"></p>
 
 > ℹ️ The app interface is in **French** for now. The shortcuts and workflow below work the same way.
 
@@ -65,9 +63,13 @@ cd revue-editing
 Notes are saved automatically to `<video>.revue.json`, next to the video.
 Settings (⌘,): auto-pause while typing, sequence start timecode, drop-frame, categories.
 
+<p align="center"><img src="docs/images/reglages.png" alt="Settings: auto-pause, start timecode, drop-frame" width="420"></p>
+
 ## Export to your editing software
 
 **Exporter les marqueurs ▾** (or ⌘E / ⇧⌘E) writes the file next to the video.
+
+<p align="center"><img src="docs/images/export.webp" alt="Confirmation banner: 6 markers exported for Resolve" width="700"></p>
 
 ### DaVinci Resolve
 
