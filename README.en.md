@@ -17,7 +17,7 @@
 <p align="center"><img src="docs/images/revue.webp" alt="Revue Montage: video player on the left, colored notes on the right" width="900"></p>
 
 > ℹ️ The app is available in **English** and **French**: pick the language in Settings (⌘,).
-> The Premiere Pro import panel is in French for now.
+> The Premiere Pro import panel follows Premiere's language.
 
 ## Why this app?
 
@@ -51,8 +51,11 @@ all that's left is to work through them one by one.
 git clone https://github.com/4rthuraw/revue-editing.git
 cd revue-editing
 ./scripts/build-app.sh          # builds dist/Revue Montage.app → drag it into Applications
-./premiere-panel/install.sh     # (optional) installs the "Importer les notes" panel in Premiere Pro (25.6+)
 ```
+
+**For Premiere Pro** (25.6 or later): in the app, open **Settings (⌘,) → General → Premiere Pro → Install**.
+The "Import Notes" panel ships inside the app; just restart Premiere afterwards.
+(For developers: `./premiere-panel/install.sh` does the same from the source code.)
 
 ## During the review
 
@@ -82,8 +85,8 @@ Make sure the **start timecode** in the settings matches your timeline (01:00:00
 
 ### Premiere Pro
 
-Open the sequence, then *Window → UXP Plugins → Importer les notes*,
-pick `… Premiere markers.json`, then **Ajouter à la séquence active** (add to active sequence).
+Open the sequence, then *Window → UXP Plugins → Import Notes* (panel installed from the app's Settings),
+pick `… Premiere markers.json`, then **Add to active sequence**.
 Category = marker name, note = marker comment. Duplicates are skipped;
 press ⌘Z twice to undo the import (colors, then markers).
 
@@ -121,7 +124,7 @@ swift scripts/make-test-video.swift test.mp4 25 60 90000    # test video with bu
 
 - `Sources/NotesCore`: pure logic (timecodes, models, exports).
 - `Sources/RevueMontage`: SwiftUI app.
-- `premiere-panel/plugin`: UXP panel for Premiere Pro (JavaScript).
+- `premiere-panel/plugin`: UXP panel for Premiere Pro (JavaScript), in English or French depending on Premiere's language.
 - Design doc (French): [`docs/superpowers/specs/2026-09-17-revue-montage-design.md`](docs/superpowers/specs/2026-09-17-revue-montage-design.md).
 
 ## License

@@ -17,4 +17,4 @@ if [[ ! -x "$UPIA" ]]; then
 fi
 
 "$UPIA" --install "$OUT"
-echo "✓ Installé. Redémarre Premiere Pro, puis : Fenêtre → Extensions (UXP) → Importer les notes."
+echo "✓ Installé. Redémarre Premiere Pro, puis : Fenêtre → UXP Plugins → Importer les notes."

@@ -1,5 +1,67 @@
 const ppro = require("premierepro");
-const { storage } = require("uxp");
+const uxp = require("uxp");
+const { storage } = uxp;
+
+// Langue du panneau : celle de l'interface de Premiere (français ou anglais).
+function detectLanguage() {
+  let locale = "";
+  try { locale = uxp.host.uiLocale || ""; } catch (e) { /* hôte sans uiLocale */ }
+  if (!locale && typeof navigator !== "undefined") locale = navigator.language || "";
+  return String(locale).toLowerCase().startsWith("fr") ? "fr" : "en";
+}
+
+const STRINGS = {
+  fr: {
+    title: "Importer les notes de revue",
+    hint: "Fichier « … marqueurs Premiere.json » exporté par Revue Montage.",
+    choose: "Choisir un fichier de notes…",
+    import: "Ajouter à la séquence active",
+    notAnExport: "Ce fichier n'est pas un export « Premiere » de Revue Montage.",
+    noMarkers: "Ce fichier ne contient aucun marqueur.",
+    invalidMarker: "Marqueur invalide dans le fichier.",
+    noProject: "Aucun projet ouvert dans Premiere Pro.",
+    noSequence: "Aucune séquence active : ouvre la séquence concernée dans la timeline.",
+    rateMismatch: (fileFps, name, seqFps) => `Attention : l'export est en ${fileFps} im/s mais la séquence « ${name} » est en ${seqFps} im/s. Les marqueurs risquent d'être décalés.`,
+    allPresent: "Tous ces marqueurs sont déjà dans la séquence.",
+    someDuplicates: (n) => `${n} marqueur(s) déjà présent(s) seront ignorés.`,
+    activeSequence: (name) => `Séquence active : ${name}`,
+    summary: (n, file) => `${n} note(s) · ${file}`,
+    nothingToAdd: "Rien à ajouter : tous ces marqueurs sont déjà dans la séquence.",
+    refused: "Premiere a refusé la création des marqueurs.",
+    undoMarkers: "Importer les notes de revue",
+    undoColors: "Couleurs des notes de revue",
+    added: (n, name) => `✓ ${n} marqueur(s) ajouté(s) à « ${name} ».`,
+    skipped: (n) => ` ${n} déjà présent(s) ignoré(s).`,
+    howToUndo: " Pour annuler : ⌘Z (deux fois : couleurs puis marqueurs).",
+    colorError: (msg) => `\nLes couleurs n'ont pas pu être appliquées : ${msg}`,
+  },
+  en: {
+    title: "Import review notes",
+    hint: "“… Premiere markers.json” file exported by Revue Montage.",
+    choose: "Choose a notes file…",
+    import: "Add to active sequence",
+    notAnExport: "This file is not a Revue Montage “Premiere” export.",
+    noMarkers: "This file has no markers.",
+    invalidMarker: "Invalid marker in the file.",
+    noProject: "No project is open in Premiere Pro.",
+    noSequence: "No active sequence: open the matching sequence in the timeline.",
+    rateMismatch: (fileFps, name, seqFps) => `Warning: the export is ${fileFps} fps but the sequence “${name}” is ${seqFps} fps. Markers may be offset.`,
+    allPresent: "All these markers are already in the sequence.",
+    someDuplicates: (n) => `${n} marker(s) already present will be skipped.`,
+    activeSequence: (name) => `Active sequence: ${name}`,
+    summary: (n, file) => `${n} note(s) · ${file}`,
+    nothingToAdd: "Nothing to add: all these markers are already in the sequence.",
+    refused: "Premiere refused to create the markers.",
+    undoMarkers: "Import review notes",
+    undoColors: "Review note colors",
+    added: (n, name) => `✓ ${n} marker(s) added to “${name}”.`,
+    skipped: (n) => ` ${n} already present, skipped.`,
+    howToUndo: " To undo: ⌘Z (twice: colors, then markers).",
+    colorError: (msg) => `\nColors could not be applied: ${msg}`,
+  },
+};
+const LANG = detectLanguage();
+const T = STRINGS[LANG];
 
 const FORMAT_ID = "revue-montage-premiere";
 const SWATCH = { red: "#ff5d5d", green: "#6ee7a0", blue: "#4d8dff", cyan: "#5ec2ff", yellow: "#ffc94d", purple: "#b07cff" };
@@ -34,11 +96,11 @@ function colorIndexFor(marker) {
 
 function validate(data) {
   if (!data || data.format !== FORMAT_ID || !Array.isArray(data.markers)) {
-    throw new Error("Ce fichier n'est pas un export « Premiere » de Revue Montage.");
+    throw new Error(T.notAnExport);
   }
-  if (data.markers.length === 0) throw new Error("Ce fichier ne contient aucun marqueur.");
+  if (data.markers.length === 0) throw new Error(T.noMarkers);
   for (const m of data.markers) {
-    if (typeof m.ticks !== "string" || !/^\d+$/.test(m.ticks)) throw new Error("Marqueur invalide dans le fichier.");
+    if (typeof m.ticks !== "string" || !/^\d+$/.test(m.ticks)) throw new Error(T.invalidMarker);
   }
   return data;
 }
@@ -62,9 +124,9 @@ async function chooseFile() {
 
 async function getContext() {
   const project = await ppro.Project.getActiveProject();
-  if (!project) return { error: "Aucun projet ouvert dans Premiere Pro." };
+  if (!project) return { error: T.noProject };
   const sequence = await project.getActiveSequence();
-  if (!sequence) return { error: "Aucune séquence active : ouvre la séquence concernée dans la timeline." };
+  if (!sequence) return { error: T.noSequence };
   return { project, sequence };
 }
 
@@ -93,20 +155,20 @@ async function render() {
     if (data.ticksPerFrame && String(timebase) !== String(data.ticksPerFrame)) {
       const seqFps = (254016000000 / Number(timebase)).toFixed(3).replace(/\.?0+$/, "");
       const fileFps = (254016000000 / Number(data.ticksPerFrame)).toFixed(3).replace(/\.?0+$/, "");
-      warnings.push(`Attention : l'export est en ${fileFps} im/s mais la séquence « ${ctx.sequence.name} » est en ${seqFps} im/s. Les marqueurs risquent d'être décalés.`);
+      warnings.push(T.rateMismatch(fileFps, ctx.sequence.name, seqFps));
     }
     if (duplicates.size === data.markers.length) {
-      warnings.push("Tous ces marqueurs sont déjà dans la séquence.");
+      warnings.push(T.allPresent);
     } else if (duplicates.size > 0) {
-      warnings.push(`${duplicates.size} marqueur(s) déjà présent(s) seront ignorés.`);
+      warnings.push(T.someDuplicates(duplicates.size));
     }
-    if (warnings.length) setStatus("warn", warnings.join("\n")); else setStatus("info", `Séquence active : ${ctx.sequence.name}`);
+    if (warnings.length) setStatus("warn", warnings.join("\n")); else setStatus("info", T.activeSequence(ctx.sequence.name));
   }
 
   const summary = $("summary");
   summary.style.display = "block";
   summary.innerHTML = `<div><b>${escapeHTML(data.reviewName)}</b></div>
-    <div class="muted">${data.markers.length} note(s) · ${escapeHTML(loaded.name)}</div>`;
+    <div class="muted">${escapeHTML(T.summary(data.markers.length, loaded.name))}</div>`;
 
   $("list").innerHTML = data.markers.map((m, i) => `
     <div class="marker ${duplicates.has(i) ? "dup" : ""}">
@@ -130,7 +192,7 @@ async function importMarkers() {
     const { owner, keys } = await existingKeys(sequence);
     const toAdd = loaded.file.markers.filter((m) => !keys.has(`${m.ticks}|${m.comments}`));
     if (toAdd.length === 0) {
-      setStatus("warn", "Rien à ajouter : tous ces marqueurs sont déjà dans la séquence.");
+      setStatus("warn", T.nothingToAdd);
       return;
     }
 
@@ -142,9 +204,9 @@ async function importMarkers() {
           const start = ppro.TickTime.createWithTicks(m.ticks);
           compound.addAction(owner.createAddMarkerAction(m.name, ppro.Marker.MARKER_TYPE_COMMENT, start, ppro.TickTime.TIME_ZERO, m.comments));
         }
-      }, "Importer les notes de revue");
+      }, T.undoMarkers);
     });
-    if (!added) throw new Error("Premiere a refusé la création des marqueurs.");
+    if (!added) throw new Error(T.refused);
 
     // 2) Couleurs : les marqueurs doivent exister pour pouvoir être colorés.
     let colorError = null;
@@ -158,17 +220,17 @@ async function importMarkers() {
             const marker = byKey.get(`${m.ticks}|${m.comments}`);
             if (marker) compound.addAction(marker.createSetColorByIndexAction(colorIndexFor(m)));
           }
-        }, "Couleurs des notes de revue");
+        }, T.undoColors);
       });
     } catch (err) {
       colorError = err;
     }
 
     const skipped = loaded.file.markers.length - toAdd.length;
-    let message = `✓ ${toAdd.length} marqueur(s) ajouté(s) à « ${sequence.name} ».`;
-    if (skipped) message += ` ${skipped} déjà présent(s) ignoré(s).`;
-    message += " Pour annuler : ⌘Z (deux fois : couleurs puis marqueurs).";
-    if (colorError) message += `\nLes couleurs n'ont pas pu être appliquées : ${colorError.message || colorError}`;
+    let message = T.added(toAdd.length, sequence.name);
+    if (skipped) message += T.skipped(skipped);
+    message += T.howToUndo;
+    if (colorError) message += T.colorError(colorError.message || colorError);
     setStatus(colorError ? "warn" : "ok", message);
     await render();
     setStatus(colorError ? "warn" : "ok", message);
@@ -177,6 +239,13 @@ async function importMarkers() {
     $("import").disabled = false;
   }
 }
+
+// Textes statiques du panneau.
+document.documentElement.lang = LANG;
+$("title").textContent = T.title;
+$("hint").textContent = T.hint;
+$("choose").textContent = T.choose;
+$("import").textContent = T.import;
 
 $("choose").addEventListener("click", chooseFile);
 $("import").addEventListener("click", importMarkers);

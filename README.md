@@ -48,8 +48,11 @@ placés à l'image près** : il n'y a plus qu'à les traiter un par un.
 git clone https://github.com/4rthuraw/revue-editing.git
 cd revue-editing
 ./scripts/build-app.sh          # construit dist/Revue Montage.app → à glisser dans Applications
-./premiere-panel/install.sh     # (optionnel) installe le panneau « Importer les notes » dans Premiere Pro (25.6+)
 ```
+
+**Pour Premiere Pro** (25.6 ou plus récent) : dans l'app, ouvre **Réglages (⌘,) → Général → Premiere Pro → Installer**.
+Le panneau « Importer les notes » est inclus dans l'app ; il suffit de redémarrer Premiere ensuite.
+(Pour les développeurs : `./premiere-panel/install.sh` fait la même chose depuis le code source.)
 
 ## Pendant la revue
 
@@ -79,7 +82,7 @@ Vérifie que le **timecode de départ** dans les réglages correspond à ta time
 
 ### Premiere Pro
 
-Ouvre la séquence, puis *Fenêtre → UXP Plugins → Importer les notes*,
+Ouvre la séquence, puis *Fenêtre → UXP Plugins → Importer les notes* (panneau installé depuis les Réglages de l'app),
 choisis `… marqueurs Premiere.json`, puis **Ajouter à la séquence active**.
 Catégorie = nom du marqueur, remarque = commentaire. Les doublons sont ignorés ;
 ⌘Z deux fois annule l'import (couleurs puis marqueurs).
@@ -118,7 +121,7 @@ swift scripts/make-test-video.swift test.mp4 25 60 90000    # vidéo de test ave
 
 - `Sources/NotesCore` : logique pure (timecodes, modèles, exports).
 - `Sources/RevueMontage` : app SwiftUI.
-- `premiere-panel/plugin` : panneau UXP pour Premiere Pro (JavaScript).
+- `premiere-panel/plugin` : panneau UXP pour Premiere Pro (JavaScript), en français ou en anglais selon la langue de Premiere.
 - Conception : [`docs/superpowers/specs/2026-09-17-revue-montage-design.md`](docs/superpowers/specs/2026-09-17-revue-montage-design.md).
 
 ## Licence

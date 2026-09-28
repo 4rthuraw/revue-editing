@@ -23,6 +23,9 @@ rm -rf "$ICONSET"
 swift "$ROOT/scripts/make-icon.swift" "$ICONSET"
 iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/AppIcon.icns"
 
+echo "→ Panneau Premiere embarqué (installé depuis les Réglages de l'app)"
+(cd "$ROOT/premiere-panel/plugin" && zip -qr -X "$APP/Contents/Resources/ImporterLesNotes.ccx" . -x ".*")
+
 cat > "$APP/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">

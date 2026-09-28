@@ -11,7 +11,7 @@ struct SettingsView: View {
             CategorySettings()
                 .tabItem { Label(tr("Catégories", "Categories"), systemImage: "tag") }
         }
-        .frame(width: 520, height: 460)
+        .frame(width: 520, height: 560)
         // Reconstruit les onglets quand la langue change.
         .id(settings.language)
     }
@@ -20,6 +20,8 @@ struct SettingsView: View {
 private struct GeneralSettings: View {
     @EnvironmentObject private var settings: AppSettings
     @State private var startText = ""
+    @State private var installingPanel = false
+    @State private var panelMessage: String?
 
     private var startIsValid: Bool { Timecode.isValid(startText, rate: FrameRate(60)) }
 
@@ -63,10 +65,41 @@ private struct GeneralSettings: View {
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
+            Section("Premiere Pro") {
+                LabeledContent(tr("Panneau « Importer les notes »", "“Import Notes” panel")) {
+                    Button(installingPanel ? tr("Installation…", "Installing…") : tr("Installer", "Install")) {
+                        installPanel()
+                    }
+                    .disabled(installingPanel)
+                }
+                Text(panelMessage ?? tr("Nécessaire pour importer les notes dans Premiere Pro (version 25.6 ou plus récente). À refaire après une mise à jour de Revue Montage.",
+                                        "Needed to import notes into Premiere Pro (version 25.6 or later). Run it again after updating Revue Montage."))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+                    .textSelection(.enabled)
+            }
         }
         .formStyle(.grouped)
         .onAppear { startText = settings.startTimecode }
         .onChange(of: startText) { _, _ in if startIsValid { commitStart() } }
+    }
+
+    private func installPanel() {
+        installingPanel = true
+        Task {
+            let outcome = await PremierePanelInstaller.install()
+            installingPanel = false
+            switch outcome {
+            case .installed:
+                panelMessage = tr("✓ Panneau installé. Redémarre Premiere Pro, puis ouvre-le depuis Fenêtre → UXP Plugins.",
+                                  "✓ Panel installed. Restart Premiere Pro, then open it from Window → UXP Plugins.")
+            case .handedToCreativeCloud:
+                panelMessage = tr("Creative Cloud a pris le relais : suis ses instructions, puis redémarre Premiere Pro.",
+                                  "Creative Cloud took over: follow its steps, then restart Premiere Pro.")
+            case .failed(let reason):
+                panelMessage = reason
+            }
+        }
     }
 
     private func commitStart() {
