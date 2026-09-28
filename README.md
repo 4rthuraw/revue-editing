@@ -41,18 +41,28 @@ placés à l'image près** : il n'y a plus qu'à les traiter un par un.
 
 ## Installation
 
-**Il te faut :** un Mac sous **macOS 14 Sonoma** ou plus récent, et les outils de développement d'Apple
-(`xcode-select --install` dans le Terminal si tu ne les as pas).
+**Il te faut :** un Mac avec puce Apple (M1 ou plus récent) sous **macOS 14 Sonoma** ou plus récent.
+
+1. Télécharge **`RevueMontage-x.y.z.dmg`** dans la [dernière Release](https://github.com/4rthuraw/revue-editing/releases/latest).
+2. Ouvre le `.dmg` et glisse **Revue Montage** dans le dossier **Applications**.
+3. **Première ouverture** : macOS indique que l'app n'a pas pu être vérifiée. C'est normal : l'app est gratuite
+   et n'est pas signée avec un compte développeur Apple payant. Ouvre **Réglages Système → Confidentialité et sécurité**,
+   descends jusqu'au message sur Revue Montage et clique **Ouvrir quand même**. À faire une seule fois.
+4. **Pour Premiere Pro** (25.6 ou plus récent) : dans l'app, ouvre **Réglages (⌘,) → Général → Premiere Pro → Installer**,
+   puis redémarre Premiere. Le panneau « Importer les notes » est inclus dans l'app.
+
+### Depuis le code source
+
+Il faut en plus les outils de développement d'Apple (`xcode-select --install` dans le Terminal).
 
 ```bash
 git clone https://github.com/4rthuraw/revue-editing.git
 cd revue-editing
 ./scripts/build-app.sh          # construit dist/Revue Montage.app → à glisser dans Applications
+./scripts/make-dmg.sh           # (optionnel) crée dist/RevueMontage-x.y.z.dmg pour une Release
 ```
 
-**Pour Premiere Pro** (25.6 ou plus récent) : dans l'app, ouvre **Réglages (⌘,) → Général → Premiere Pro → Installer**.
-Le panneau « Importer les notes » est inclus dans l'app ; il suffit de redémarrer Premiere ensuite.
-(Pour les développeurs : `./premiere-panel/install.sh` fait la même chose depuis le code source.)
+`./premiere-panel/install.sh` installe le panneau Premiere directement depuis le code source.
 
 ## Pendant la revue
 
