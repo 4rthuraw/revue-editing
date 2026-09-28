@@ -21,17 +21,17 @@ struct RevueMontageApp: App {
         .defaultSize(width: 1360, height: 820)
         .commands {
             CommandGroup(replacing: .newItem) {
-                Button("Ouvrir une vidéo…") { state.presentOpenPanel() }
+                Button(tr("Ouvrir une vidéo…", "Open Video…")) { state.presentOpenPanel() }
                     .keyboardShortcut("o")
-                Button("Fermer la revue") { state.closeSession() }
+                Button(tr("Fermer la revue", "Close Review")) { state.closeSession() }
                     .keyboardShortcut("w", modifiers: [.command, .shift])
                     .disabled(state.session == nil)
             }
-            CommandMenu("Marqueurs") {
-                Button("Exporter pour DaVinci Resolve (.edl)") { state.session?.export(.resolve) }
+            CommandMenu(tr("Marqueurs", "Markers")) {
+                Button(tr("Exporter pour DaVinci Resolve (.edl)", "Export for DaVinci Resolve (.edl)")) { state.session?.export(.resolve) }
                     .keyboardShortcut("e")
                     .disabled(state.session == nil)
-                Button("Exporter pour Premiere Pro (.json)") { state.session?.export(.premiere) }
+                Button(tr("Exporter pour Premiere Pro (.json)", "Export for Premiere Pro (.json)")) { state.session?.export(.premiere) }
                     .keyboardShortcut("e", modifiers: [.command, .shift])
                     .disabled(state.session == nil)
             }
@@ -89,8 +89,8 @@ final class AppState: ObservableObject {
     func presentOpenPanel() {
         let panel = NSOpenPanel()
         panel.allowedContentTypes = Self.videoTypes
-        panel.message = "Choisis ton export vidéo (ou un fichier .revue.json)"
-        panel.prompt = "Ouvrir"
+        panel.message = tr("Choisis ton export vidéo (ou un fichier .revue.json)", "Choose your video export (or a .revue.json file)")
+        panel.prompt = tr("Ouvrir", "Open")
         if panel.runModal() == .OK, let url = panel.url { open(url) }
     }
 
@@ -146,6 +146,7 @@ final class AppState: ObservableObject {
 
 struct RootView: View {
     @EnvironmentObject private var state: AppState
+    @EnvironmentObject private var settings: AppSettings
 
     var body: some View {
         ZStack {
@@ -162,12 +163,14 @@ struct RootView: View {
                     .background(.black.opacity(0.4))
             }
         }
+        // Reconstruit toute l'interface quand la langue change.
+        .id(settings.language)
         .dropDestination(for: URL.self) { urls, _ in
             guard let url = urls.first else { return false }
             state.open(url)
             return true
         }
-        .alert("Impossible d'ouvrir", isPresented: Binding(
+        .alert(tr("Impossible d'ouvrir", "Can't Open"), isPresented: Binding(
             get: { state.openError != nil }, set: { if !$0 { state.openError = nil } }
         )) {
             Button("OK", role: .cancel) {}

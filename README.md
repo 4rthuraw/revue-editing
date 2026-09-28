@@ -37,6 +37,7 @@ placés à l'image près** : il n'y a plus qu'à les traiter un par un.
 - 💾 Sauvegarde automatique à côté de la vidéo : tu retrouves tes notes en rouvrant le fichier.
 - 📤 Export en marqueurs pour **DaVinci Resolve** (`.edl`) et **Premiere Pro** (`.json` + panneau d'import).
 - ⏱️ Timecode de départ de la séquence et drop-frame réglables.
+- 🌍 Interface en français ou en anglais.
 
 ## Installation
 
@@ -59,7 +60,7 @@ cd revue-editing
 4. Clic sur une note = aller à ce moment. Double-clic = modifier. Clic droit = catégorie, recaler, supprimer.
 
 Les notes sont sauvegardées automatiquement dans `<vidéo>.revue.json`, à côté de la vidéo.
-Réglages (⌘,) : pause auto en écrivant, timecode de départ de la séquence, drop-frame, catégories.
+Réglages (⌘,) : langue, pause auto en écrivant, timecode de départ de la séquence, drop-frame, catégories.
 
 <p align="center"><img src="docs/images/reglages.png" alt="Réglages : pause auto, timecode de départ, drop-frame" width="420"></p>
 
