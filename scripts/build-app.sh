@@ -25,6 +25,8 @@ iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/AppIcon.icns"
 
 echo "→ Panneau Premiere embarqué (installé depuis les Réglages de l'app)"
 (cd "$ROOT/premiere-panel/plugin" && zip -qr -X "$APP/Contents/Resources/ImporterLesNotes.ccx" . -x ".*")
+# Copie du manifeste : l'app y lit l'identifiant et la version pour vérifier l'installation.
+cp "$ROOT/premiere-panel/plugin/manifest.json" "$APP/Contents/Resources/PremierePanel-manifest.json"
 
 cat > "$APP/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>

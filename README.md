@@ -82,7 +82,7 @@ Vérifie que le **timecode de départ** dans les réglages correspond à ta time
 
 ### Premiere Pro
 
-Ouvre la séquence, puis *Fenêtre → UXP Plugins → Importer les notes* (panneau installé depuis les Réglages de l'app),
+Ouvre la séquence, puis *Fenêtre → UXP Plugins → Revue Montage → Importer les notes* (panneau installé depuis les Réglages de l'app),
 choisis `… marqueurs Premiere.json`, puis **Ajouter à la séquence active**.
 Catégorie = nom du marqueur, remarque = commentaire. Les doublons sont ignorés ;
 ⌘Z deux fois annule l'import (couleurs puis marqueurs).

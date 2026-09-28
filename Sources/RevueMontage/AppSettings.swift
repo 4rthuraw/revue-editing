@@ -15,7 +15,7 @@ final class AppSettings: ObservableObject {
             // Les menus fournis par macOS (Édition, Fenêtre…) suivront au prochain lancement.
             defaults.set([language.rawValue], forKey: "AppleLanguages")
             L10n.language = language
-            renameDefaultCategories(from: oldValue, to: language)
+            translateDefaultCategories(to: language)
         }
     }
     @Published var pauseWhileTyping: Bool {
@@ -68,15 +68,17 @@ final class AppSettings: ObservableObject {
         categories = NoteCategory.defaults(for: language)
     }
 
-    /// Traduit les catégories par défaut, sauf celles que l'utilisateur a renommées.
-    private func renameDefaultCategories(from old: AppLanguage, to new: AppLanguage) {
-        let oldDefaults = NoteCategory.defaults(for: old)
-        let newDefaults = NoteCategory.defaults(for: new)
+    /// Traduit les catégories par défaut encore nommées d'origine (dans n'importe quelle langue),
+    /// sans toucher à celles que l'utilisateur a renommées.
+    private func translateDefaultCategories(to language: AppLanguage) {
+        let targets = NoteCategory.defaults(for: language)
         categories = categories.map { category in
-            guard let index = oldDefaults.firstIndex(where: { $0.id == category.id }),
-                  oldDefaults[index].name == category.name else { return category }
+            guard let target = targets.first(where: { $0.id == category.id }),
+                  AppLanguage.allCases.contains(where: { lang in
+                      NoteCategory.defaults(for: lang).contains { $0.id == category.id && $0.name == category.name }
+                  }) else { return category }
             var renamed = category
-            renamed.name = newDefaults[index].name
+            renamed.name = target.name
             return renamed
         }
     }

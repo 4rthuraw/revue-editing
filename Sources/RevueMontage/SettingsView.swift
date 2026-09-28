@@ -91,8 +91,8 @@ private struct GeneralSettings: View {
             installingPanel = false
             switch outcome {
             case .installed:
-                panelMessage = tr("✓ Panneau installé. Redémarre Premiere Pro, puis ouvre-le depuis Fenêtre → UXP Plugins.",
-                                  "✓ Panel installed. Restart Premiere Pro, then open it from Window → UXP Plugins.")
+                panelMessage = tr("✓ Panneau installé. Redémarre Premiere Pro, puis : ", "✓ Panel installed. Restart Premiere Pro, then: ")
+                    + PremierePanelInstaller.menuPath
             case .handedToCreativeCloud:
                 panelMessage = tr("Creative Cloud a pris le relais : suis ses instructions, puis redémarre Premiere Pro.",
                                   "Creative Cloud took over: follow its steps, then restart Premiere Pro.")

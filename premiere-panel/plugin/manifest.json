@@ -15,7 +15,7 @@
     {
       "id": "importNotes",
       "type": "panel",
-      "label": { "default": "Import Notes", "fr_FR": "Importer les notes" },
+      "label": { "default": "Import Notes", "fr": "Importer les notes" },
       "minimumSize": { "width": 260, "height": 320 },
       "maximumSize": { "width": 2000, "height": 2000 },
       "preferredDockedSize": { "width": 320, "height": 480 },

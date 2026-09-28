@@ -85,7 +85,7 @@ Make sure the **start timecode** in the settings matches your timeline (01:00:00
 
 ### Premiere Pro
 
-Open the sequence, then *Window → UXP Plugins → Import Notes* (panel installed from the app's Settings),
+Open the sequence, then *Window → UXP Plugins → Revue Montage → Import Notes* (panel installed from the app's Settings),
 pick `… Premiere markers.json`, then **Add to active sequence**.
 Category = marker name, note = marker comment. Duplicates are skipped;
 press ⌘Z twice to undo the import (colors, then markers).
