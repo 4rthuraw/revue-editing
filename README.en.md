@@ -16,7 +16,8 @@
 
 <p align="center"><img src="docs/images/revue.webp" alt="Revue Montage: video player on the left, colored notes on the right" width="900"></p>
 
-> ℹ️ The app interface is in **French** for now. The shortcuts and workflow below work the same way.
+> ℹ️ The app is available in **English** and **French**: pick the language in Settings (⌘,).
+> The Premiere Pro import panel follows Premiere's language.
 
 ## Why this app?
 
@@ -39,6 +40,7 @@ all that's left is to work through them one by one.
 - 💾 Autosave next to the video: reopen the file and your notes are back.
 - 📤 Marker export for **DaVinci Resolve** (`.edl`) and **Premiere Pro** (`.json` + import panel).
 - ⏱️ Configurable sequence start timecode and drop-frame.
+- 🌍 English or French interface.
 
 ## Installation
 
@@ -46,11 +48,14 @@ all that's left is to work through them one by one.
 (run `xcode-select --install` in Terminal if you don't have them).
 
 ```bash
-git clone https://github.com/heyy-tatious/revue-editing.git
+git clone https://github.com/4rthuraw/revue-editing.git
 cd revue-editing
 ./scripts/build-app.sh          # builds dist/Revue Montage.app → drag it into Applications
-./premiere-panel/install.sh     # (optional) installs the "Importer les notes" panel in Premiere Pro (25.6+)
 ```
+
+**For Premiere Pro** (25.6 or later): in the app, open **Settings (⌘,) → General → Premiere Pro → Install**.
+The "Import Notes" panel ships inside the app; just restart Premiere afterwards.
+(For developers: `./premiere-panel/install.sh` does the same from the source code.)
 
 ## During the review
 
@@ -61,27 +66,27 @@ cd revue-editing
 4. Click a note to jump to that moment. Double-click to edit. Right-click for category, re-sync, delete.
 
 Notes are saved automatically to `<video>.revue.json`, next to the video.
-Settings (⌘,): auto-pause while typing, sequence start timecode, drop-frame, categories.
+Settings (⌘,): language, auto-pause while typing, sequence start timecode, drop-frame, categories.
 
 <p align="center"><img src="docs/images/reglages.png" alt="Settings: auto-pause, start timecode, drop-frame" width="420"></p>
 
 ## Export to your editing software
 
-**Exporter les marqueurs ▾** (or ⌘E / ⇧⌘E) writes the file next to the video.
+**Export Markers ▾** (or ⌘E / ⇧⌘E) writes the file next to the video.
 
 <p align="center"><img src="docs/images/export.webp" alt="Confirmation banner: 6 markers exported for Resolve" width="700"></p>
 
 ### DaVinci Resolve
 
 In the Media Pool, right-click the timeline →
-*Timelines → Import → Timeline Markers from EDL…* → pick `… marqueurs Resolve.edl`.
+*Timelines → Import → Timeline Markers from EDL…* → pick `… Resolve markers.edl`.
 The note text becomes the marker name ("[Category] note").
 Make sure the **start timecode** in the settings matches your timeline (01:00:00:00 by default).
 
 ### Premiere Pro
 
-Open the sequence, then *Window → UXP Plugins → Importer les notes*,
-pick `… marqueurs Premiere.json`, then **Ajouter à la séquence active** (add to active sequence).
+Open the sequence, then *Window → UXP Plugins → Revue Montage → Import Notes* (panel installed from the app's Settings),
+pick `… Premiere markers.json`, then **Add to active sequence**.
 Category = marker name, note = marker comment. Duplicates are skipped;
 press ⌘Z twice to undo the import (colors, then markers).
 
@@ -94,7 +99,7 @@ my testing and my feedback.
 
 The core (timecode math, Resolve and Premiere exports) is covered by automated checks, and I've tested it
 in Resolve and Premiere. Bugs may remain, though: if you find one,
-[open an issue](https://github.com/heyy-tatious/revue-editing/issues), it really helps.
+[open an issue](https://github.com/4rthuraw/revue-editing/issues), it really helps.
 
 ## ☕ Support the project
 
@@ -119,7 +124,7 @@ swift scripts/make-test-video.swift test.mp4 25 60 90000    # test video with bu
 
 - `Sources/NotesCore`: pure logic (timecodes, models, exports).
 - `Sources/RevueMontage`: SwiftUI app.
-- `premiere-panel/plugin`: UXP panel for Premiere Pro (JavaScript).
+- `premiere-panel/plugin`: UXP panel for Premiere Pro (JavaScript), in English or French depending on Premiere's language.
 - Design doc (French): [`docs/superpowers/specs/2026-09-17-revue-montage-design.md`](docs/superpowers/specs/2026-09-17-revue-montage-design.md).
 
 ## License

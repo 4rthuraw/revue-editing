@@ -37,6 +37,7 @@ placés à l'image près** : il n'y a plus qu'à les traiter un par un.
 - 💾 Sauvegarde automatique à côté de la vidéo : tu retrouves tes notes en rouvrant le fichier.
 - 📤 Export en marqueurs pour **DaVinci Resolve** (`.edl`) et **Premiere Pro** (`.json` + panneau d'import).
 - ⏱️ Timecode de départ de la séquence et drop-frame réglables.
+- 🌍 Interface en français ou en anglais.
 
 ## Installation
 
@@ -44,11 +45,14 @@ placés à l'image près** : il n'y a plus qu'à les traiter un par un.
 (`xcode-select --install` dans le Terminal si tu ne les as pas).
 
 ```bash
-git clone https://github.com/heyy-tatious/revue-editing.git
+git clone https://github.com/4rthuraw/revue-editing.git
 cd revue-editing
 ./scripts/build-app.sh          # construit dist/Revue Montage.app → à glisser dans Applications
-./premiere-panel/install.sh     # (optionnel) installe le panneau « Importer les notes » dans Premiere Pro (25.6+)
 ```
+
+**Pour Premiere Pro** (25.6 ou plus récent) : dans l'app, ouvre **Réglages (⌘,) → Général → Premiere Pro → Installer**.
+Le panneau « Importer les notes » est inclus dans l'app ; il suffit de redémarrer Premiere ensuite.
+(Pour les développeurs : `./premiere-panel/install.sh` fait la même chose depuis le code source.)
 
 ## Pendant la revue
 
@@ -59,7 +63,7 @@ cd revue-editing
 4. Clic sur une note = aller à ce moment. Double-clic = modifier. Clic droit = catégorie, recaler, supprimer.
 
 Les notes sont sauvegardées automatiquement dans `<vidéo>.revue.json`, à côté de la vidéo.
-Réglages (⌘,) : pause auto en écrivant, timecode de départ de la séquence, drop-frame, catégories.
+Réglages (⌘,) : langue, pause auto en écrivant, timecode de départ de la séquence, drop-frame, catégories.
 
 <p align="center"><img src="docs/images/reglages.png" alt="Réglages : pause auto, timecode de départ, drop-frame" width="420"></p>
 
@@ -78,7 +82,7 @@ Vérifie que le **timecode de départ** dans les réglages correspond à ta time
 
 ### Premiere Pro
 
-Ouvre la séquence, puis *Fenêtre → UXP Plugins → Importer les notes*,
+Ouvre la séquence, puis *Fenêtre → UXP Plugins → Revue Montage → Importer les notes* (panneau installé depuis les Réglages de l'app),
 choisis `… marqueurs Premiere.json`, puis **Ajouter à la séquence active**.
 Catégorie = nom du marqueur, remarque = commentaire. Les doublons sont ignorés ;
 ⌘Z deux fois annule l'import (couleurs puis marqueurs).
@@ -92,7 +96,7 @@ de mes essais et de mes retours.
 
 Le cœur du logiciel (calcul des timecodes, exports Resolve et Premiere) est couvert par des vérifications
 automatiques, et je l'ai testé dans Resolve et Premiere. Mais il peut rester des bugs : si tu en trouves un,
-[ouvre une issue](https://github.com/heyy-tatious/revue-editing/issues), ça m'aide beaucoup.
+[ouvre une issue](https://github.com/4rthuraw/revue-editing/issues), ça m'aide beaucoup.
 
 ## ☕ Soutenir le projet
 
@@ -117,7 +121,7 @@ swift scripts/make-test-video.swift test.mp4 25 60 90000    # vidéo de test ave
 
 - `Sources/NotesCore` : logique pure (timecodes, modèles, exports).
 - `Sources/RevueMontage` : app SwiftUI.
-- `premiere-panel/plugin` : panneau UXP pour Premiere Pro (JavaScript).
+- `premiere-panel/plugin` : panneau UXP pour Premiere Pro (JavaScript), en français ou en anglais selon la langue de Premiere.
 - Conception : [`docs/superpowers/specs/2026-09-17-revue-montage-design.md`](docs/superpowers/specs/2026-09-17-revue-montage-design.md).
 
 ## Licence

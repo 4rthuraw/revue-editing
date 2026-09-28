@@ -61,11 +61,12 @@ struct NotesPanel: View {
                 Image(systemName: "text.bubble")
                     .font(.system(size: 26, weight: .light))
                     .foregroundStyle(Theme.textMuted)
-                Text(session.review.notes.isEmpty ? "Aucune note pour l'instant" : "Aucune note dans cette catégorie")
+                Text(session.review.notes.isEmpty ? tr("Aucune note pour l'instant", "No notes yet")
+                                                   : tr("Aucune note dans cette catégorie", "No notes in this category"))
                     .font(.system(size: 12, weight: .medium))
                     .foregroundStyle(Theme.textSecondary)
                 if session.review.notes.isEmpty {
-                    Text("Appuie sur N pendant la lecture\npour noter une remarque.")
+                    Text(tr("Appuie sur N pendant la lecture\npour noter une remarque.", "Press N during playback\nto write a note."))
                         .multilineTextAlignment(.center)
                         .font(.system(size: 11))
                         .foregroundStyle(Theme.textMuted)
@@ -124,7 +125,7 @@ private struct NoteRow: View {
                     if hovering && !isEditing { actions }
                 }
                 if isEditing {
-                    TextField("Remarque", text: $editText, axis: .vertical)
+                    TextField(tr("Remarque", "Note"), text: $editText, axis: .vertical)
                         .textFieldStyle(.plain)
                         .font(.system(size: 12))
                         .foregroundStyle(Theme.text)
@@ -162,7 +163,7 @@ private struct NoteRow: View {
     private var actions: some View {
         HStack(spacing: 8) {
             Button { session.editingNoteID = note.id } label: { Image(systemName: "pencil") }
-                .help("Modifier (double-clic)")
+                .help(tr("Modifier (double-clic)", "Edit (double-click)"))
             Menu {
                 menu
             } label: {
@@ -179,15 +180,15 @@ private struct NoteRow: View {
 
     @ViewBuilder
     private var menu: some View {
-        Button("Modifier le texte") { session.editingNoteID = note.id }
-        Menu("Catégorie") {
+        Button(tr("Modifier le texte", "Edit Text")) { session.editingNoteID = note.id }
+        Menu(tr("Catégorie", "Category")) {
             ForEach(session.review.categories) { category in
                 Button(category.name) { session.setCategory(of: note.id, to: category.id) }
             }
         }
-        Button("Caler sur l'image affichée") { session.moveToCurrentFrame(note.id) }
+        Button(tr("Caler sur l'image affichée", "Move to Current Frame")) { session.moveToCurrentFrame(note.id) }
         Divider()
-        Button("Supprimer", role: .destructive) { session.delete(note.id) }
+        Button(tr("Supprimer", "Delete"), role: .destructive) { session.delete(note.id) }
     }
 
     private func commitEdit() {
@@ -222,10 +223,10 @@ struct Composer: View {
                 .menuIndicator(.hidden)
                 .buttonStyle(.plain)
                 .fixedSize()
-                .help("Tab pour changer de catégorie")
+                .help(tr("Tab pour changer de catégorie", "Tab to change category"))
                 Spacer()
                 if session.draftFrame != nil {
-                    Button("Annuler") { session.cancelDraft() }
+                    Button(tr("Annuler", "Cancel")) { session.cancelDraft() }
                         .buttonStyle(.plain)
                         .font(.system(size: 11))
                         .foregroundStyle(Theme.textMuted)
@@ -235,11 +236,11 @@ struct Composer: View {
             inputField
 
             HStack {
-                Text("↵ valider · ⇥ catégorie · ⎋ annuler")
+                Text(tr("↵ valider · ⇥ catégorie · ⎋ annuler", "↵ add · ⇥ category · ⎋ cancel"))
                     .font(.system(size: 10))
                     .foregroundStyle(Theme.textMuted)
                 Spacer()
-                Button("Ajouter") { session.submitDraft() }
+                Button(tr("Ajouter", "Add")) { session.submitDraft() }
                     .buttonStyle(PrimaryButtonStyle())
                     .disabled(session.draftText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
             }
@@ -258,7 +259,7 @@ struct Composer: View {
     }
 
     private var inputField: some View {
-        TextField("Écris une remarque…", text: $session.draftText, axis: .vertical)
+        TextField(tr("Écris une remarque…", "Write a note…"), text: $session.draftText, axis: .vertical)
             .textFieldStyle(.plain)
             .font(.system(size: 13))
             .foregroundStyle(Theme.text)

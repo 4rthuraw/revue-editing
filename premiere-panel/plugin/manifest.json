@@ -1,7 +1,7 @@
 {
   "id": "com.arthurbardin.revuemontage.panel",
-  "name": "Importer les notes",
-  "version": "1.0.0",
+  "name": "Revue Montage",
+  "version": "1.1.0",
   "main": "index.html",
   "host": {
     "app": "premierepro",
@@ -15,7 +15,7 @@
     {
       "id": "importNotes",
       "type": "panel",
-      "label": { "default": "Importer les notes" },
+      "label": { "default": "Import Notes", "fr": "Importer les notes" },
       "minimumSize": { "width": 260, "height": 320 },
       "maximumSize": { "width": 2000, "height": 2000 },
       "preferredDockedSize": { "width": 320, "height": 480 },

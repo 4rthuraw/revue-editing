@@ -13,7 +13,7 @@ struct HomeView: View {
                     .font(.system(size: 13, weight: .semibold))
                     .foregroundStyle(Theme.text)
                 Spacer()
-                SettingsLink { Label("Réglages", systemImage: "gearshape") }
+                SettingsLink { Label(tr("Réglages", "Settings"), systemImage: "gearshape") }
                     .buttonStyle(GhostButtonStyle())
             }
             .padding(.leading, 84)
@@ -37,10 +37,11 @@ struct HomeView: View {
                 Image(systemName: "film.stack")
                     .font(.system(size: 42, weight: .light))
                     .foregroundStyle(Theme.accentText)
-                Text("Glisse ton export ici")
+                Text(tr("Glisse ton export ici", "Drop your export here"))
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundStyle(Theme.text)
-                Text("ou clique pour choisir une vidéo (.mp4, .mov)\nLes notes déjà prises sur cette vidéo seront rechargées.")
+                Text(tr("ou clique pour choisir une vidéo (.mp4, .mov)\nLes notes déjà prises sur cette vidéo seront rechargées.",
+                         "or click to choose a video (.mp4, .mov)\nNotes already taken on this video will be reloaded."))
                     .multilineTextAlignment(.center)
                     .font(.system(size: 12))
                     .foregroundStyle(Theme.textMuted)
@@ -62,12 +63,12 @@ struct HomeView: View {
 
     private var recents: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("RÉCENTS")
+            Text(tr("RÉCENTS", "RECENT"))
                 .font(.system(size: 10, weight: .semibold))
                 .kerning(0.8)
                 .foregroundStyle(Theme.textMuted)
             if settings.recentVideos.isEmpty {
-                Text("Aucune revue pour l'instant.")
+                Text(tr("Aucune revue pour l'instant.", "No reviews yet."))
                     .font(.system(size: 12))
                     .foregroundStyle(Theme.textMuted)
             }
@@ -103,7 +104,7 @@ private struct RecentRow: View {
                         .font(.system(size: 12, weight: .medium))
                         .foregroundStyle(exists ? Theme.text : Theme.textMuted)
                         .lineLimit(1)
-                    Text(exists ? url.deletingLastPathComponent().path : "Fichier introuvable")
+                    Text(exists ? url.deletingLastPathComponent().path : tr("Fichier introuvable", "File not found"))
                         .font(.system(size: 10))
                         .foregroundStyle(Theme.textMuted)
                         .lineLimit(1)
@@ -114,7 +115,7 @@ private struct RecentRow: View {
                     Button { settings.forgetRecent(path) } label: { Image(systemName: "xmark") }
                         .buttonStyle(.plain)
                         .foregroundStyle(Theme.textMuted)
-                        .help("Retirer de la liste")
+                        .help(tr("Retirer de la liste", "Remove from list"))
                 }
             }
             .padding(10)

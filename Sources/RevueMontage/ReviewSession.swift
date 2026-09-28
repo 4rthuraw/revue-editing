@@ -76,9 +76,12 @@ final class ReviewSession: ObservableObject {
 
         var errorDescription: String? {
             switch self {
-            case .noVideoTrack: "Ce fichier ne contient pas de piste vidéo."
-            case .missingVideo(let path): "La vidéo de cette revue est introuvable :\n\(path)"
-            case .unreadableReview: "Ce fichier de revue est illisible."
+            case .noVideoTrack:
+                tr("Ce fichier ne contient pas de piste vidéo.", "This file has no video track.")
+            case .missingVideo(let path):
+                tr("La vidéo de cette revue est introuvable :\n\(path)", "The video for this review can't be found:\n\(path)")
+            case .unreadableReview:
+                tr("Ce fichier de revue est illisible.", "This review file can't be read.")
             }
         }
     }
@@ -299,7 +302,8 @@ final class ReviewSession: ObservableObject {
         do {
             try review.encoded().write(to: Review.storageURL(forVideo: review.videoURL), options: .atomic)
         } catch {
-            errorMessage = "Impossible d'enregistrer la revue à côté de la vidéo : \(error.localizedDescription)"
+            errorMessage = tr("Impossible d'enregistrer la revue à côté de la vidéo : ", "Couldn't save the review next to the video: ")
+                + error.localizedDescription
         }
     }
 
@@ -312,16 +316,20 @@ final class ReviewSession: ObservableObject {
             switch target {
             case .resolve:
                 let edl = try ResolveEDLExporter.export(review, settings: settings.exportSettings)
-                url = folder.appendingPathComponent("\(review.title) – marqueurs Resolve.edl")
+                url = folder.appendingPathComponent("\(review.title) – \(tr("marqueurs Resolve", "Resolve markers")).edl")
                 try Data(edl.utf8).write(to: url, options: .atomic)
             case .premiere:
                 let data = try PremiereJSONExporter.export(review, settings: settings.exportSettings)
-                url = folder.appendingPathComponent("\(review.title) – marqueurs Premiere.json")
+                url = folder.appendingPathComponent("\(review.title) – \(tr("marqueurs Premiere", "Premiere markers")).json")
                 try data.write(to: url, options: .atomic)
             }
             let count = review.notes.count
             let app = target == .resolve ? "Resolve" : "Premiere"
-            banner = Banner(message: "\(count) marqueur\(count > 1 ? "s" : "") exporté\(count > 1 ? "s" : "") pour \(app)", fileURL: url)
+            let plural = count > 1 ? "s" : ""
+            banner = Banner(message: tr("\(count) marqueur\(plural) exporté\(plural) pour \(app)",
+                                        "\(count) marker\(plural) exported for \(app)"), fileURL: url)
+        } catch let error as ExportError {
+            errorMessage = error.localizedMessage
         } catch {
             errorMessage = error.localizedDescription
         }

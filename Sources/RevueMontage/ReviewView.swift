@@ -25,7 +25,7 @@ struct ReviewView: View {
             }
         }
         .animation(.spring(duration: 0.3), value: session.banner)
-        .alert("Erreur", isPresented: Binding(
+        .alert(tr("Erreur", "Error"), isPresented: Binding(
             get: { session.errorMessage != nil }, set: { if !$0 { session.errorMessage = nil } }
         )) {
             Button("OK", role: .cancel) {}
@@ -45,15 +45,15 @@ private struct TopBar: View {
                 Image(systemName: "chevron.left")
             }
             .buttonStyle(GhostButtonStyle())
-            .help("Retour à l'accueil")
+            .help(tr("Retour à l'accueil", "Back to home"))
 
             HStack(spacing: 6) {
-                Text("Revue ·").foregroundStyle(Theme.textMuted)
+                Text(tr("Revue ·", "Review ·")).foregroundStyle(Theme.textMuted)
                 Text(session.review.videoURL.lastPathComponent)
                     .fontWeight(.semibold)
                     .foregroundStyle(Theme.text)
                     .lineLimit(1)
-                Text("\(session.rate.label) im/s")
+                Text("\(session.rate.label) \(tr("im/s", "fps"))")
                     .font(Theme.mono)
                     .foregroundStyle(Theme.textMuted)
                     .padding(.leading, 4)
@@ -62,20 +62,20 @@ private struct TopBar: View {
 
             Spacer()
 
-            SettingsLink { Label("Réglages", systemImage: "gearshape") }
+            SettingsLink { Label(tr("Réglages", "Settings"), systemImage: "gearshape") }
                 .buttonStyle(GhostButtonStyle())
 
             Menu {
                 Button("DaVinci Resolve (.edl)") { session.export(.resolve) }
                 Button("Premiere Pro (.json)") { session.export(.premiere) }
             } label: {
-                Text("Exporter les marqueurs")
+                Text(tr("Exporter les marqueurs", "Export Markers"))
             }
             .menuStyle(.button)
             .buttonStyle(PrimaryButtonStyle())
             .fixedSize()
             .disabled(session.review.notes.isEmpty)
-            .help(session.review.notes.isEmpty ? "Ajoute au moins une note pour exporter" : "⌘E Resolve · ⇧⌘E Premiere")
+            .help(session.review.notes.isEmpty ? tr("Ajoute au moins une note pour exporter", "Add at least one note to export") : "⌘E Resolve · ⇧⌘E Premiere")
         }
         .padding(.leading, 84)
         .padding(.trailing, 14)
@@ -113,9 +113,9 @@ private struct PlayerStage: View {
     private var controls: some View {
         HStack(spacing: 14) {
             HStack(spacing: 4) {
-                iconButton("backward.frame.fill", help: "Image précédente (←)") { session.step(by: -1) }
-                iconButton(session.isPlaying ? "pause.fill" : "play.fill", help: "Lecture / pause (Espace)", size: 16) { session.togglePlay() }
-                iconButton("forward.frame.fill", help: "Image suivante (→)") { session.step(by: 1) }
+                iconButton("backward.frame.fill", help: tr("Image précédente (←)", "Previous frame (←)")) { session.step(by: -1) }
+                iconButton(session.isPlaying ? "pause.fill" : "play.fill", help: tr("Lecture / pause (Espace)", "Play / pause (Space)"), size: 16) { session.togglePlay() }
+                iconButton("forward.frame.fill", help: tr("Image suivante (→)", "Next frame (→)")) { session.step(by: 1) }
             }
             HStack(spacing: 6) {
                 Text(session.timecode(for: session.currentFrame))
@@ -128,7 +128,7 @@ private struct PlayerStage: View {
             Spacer()
 
             Toggle(isOn: $settings.pauseWhileTyping) {
-                Text("Pause auto en écrivant")
+                Text(tr("Pause auto en écrivant", "Auto-pause while typing"))
                     .font(.system(size: 11))
                     .foregroundStyle(Theme.textSecondary)
             }
@@ -136,7 +136,7 @@ private struct PlayerStage: View {
             .controlSize(.mini)
             .tint(Theme.accent)
 
-            Text("N nouvelle note · J K L · ← →")
+            Text(tr("N nouvelle note · J K L · ← →", "N new note · J K L · ← →"))
                 .font(.system(size: 10))
                 .foregroundStyle(Theme.textMuted)
         }
@@ -256,7 +256,7 @@ private struct BannerView: View {
             Image(systemName: "checkmark.circle.fill").foregroundStyle(Color(hex: 0x6EE7A0))
             Text(banner.message).font(.system(size: 12, weight: .medium)).foregroundStyle(Theme.text)
             if let url = banner.fileURL {
-                Button("Afficher dans le Finder") { NSWorkspace.shared.activateFileViewerSelecting([url]) }
+                Button(tr("Afficher dans le Finder", "Show in Finder")) { NSWorkspace.shared.activateFileViewerSelecting([url]) }
                     .buttonStyle(GhostButtonStyle())
             }
             Button(action: dismiss) { Image(systemName: "xmark") }

@@ -8,6 +8,16 @@ final class AppSettings: ObservableObject {
 
     private let defaults = UserDefaults.standard
 
+    @Published var language: AppLanguage {
+        didSet {
+            guard language != oldValue else { return }
+            defaults.set(language.rawValue, forKey: "language")
+            // Les menus fournis par macOS (Édition, Fenêtre…) suivront au prochain lancement.
+            defaults.set([language.rawValue], forKey: "AppleLanguages")
+            L10n.language = language
+            translateDefaultCategories(to: language)
+        }
+    }
     @Published var pauseWhileTyping: Bool {
         didSet { defaults.set(pauseWhileTyping, forKey: "pauseWhileTyping") }
     }
@@ -25,6 +35,9 @@ final class AppSettings: ObservableObject {
     }
 
     private init() {
+        let language = AppLanguage(rawValue: defaults.string(forKey: "language") ?? "") ?? .systemDefault
+        L10n.language = language
+        self.language = language
         pauseWhileTyping = defaults.object(forKey: "pauseWhileTyping") as? Bool ?? true
         startTimecode = defaults.string(forKey: "startTimecode") ?? "01:00:00:00"
         dropFrame = defaults.bool(forKey: "dropFrame")
@@ -33,7 +46,7 @@ final class AppSettings: ObservableObject {
            let saved = try? JSONDecoder().decode([NoteCategory].self, from: data), !saved.isEmpty {
             categories = saved
         } else {
-            categories = NoteCategory.defaults
+            categories = NoteCategory.defaults(for: language)
         }
     }
 
@@ -52,7 +65,22 @@ final class AppSettings: ObservableObject {
     }
 
     func resetCategories() {
-        categories = NoteCategory.defaults
+        categories = NoteCategory.defaults(for: language)
+    }
+
+    /// Traduit les catégories par défaut encore nommées d'origine (dans n'importe quelle langue),
+    /// sans toucher à celles que l'utilisateur a renommées.
+    private func translateDefaultCategories(to language: AppLanguage) {
+        let targets = NoteCategory.defaults(for: language)
+        categories = categories.map { category in
+            guard let target = targets.first(where: { $0.id == category.id }),
+                  AppLanguage.allCases.contains(where: { lang in
+                      NoteCategory.defaults(for: lang).contains { $0.id == category.id && $0.name == category.name }
+                  }) else { return category }
+            var renamed = category
+            renamed.name = target.name
+            return renamed
+        }
     }
 
     private func save<T: Encodable>(_ value: T, forKey key: String) {

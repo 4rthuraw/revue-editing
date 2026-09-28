@@ -23,6 +23,11 @@ rm -rf "$ICONSET"
 swift "$ROOT/scripts/make-icon.swift" "$ICONSET"
 iconutil -c icns "$ICONSET" -o "$APP/Contents/Resources/AppIcon.icns"
 
+echo "→ Panneau Premiere embarqué (installé depuis les Réglages de l'app)"
+(cd "$ROOT/premiere-panel/plugin" && zip -qr -X "$APP/Contents/Resources/ImporterLesNotes.ccx" . -x ".*")
+# Copie du manifeste : l'app y lit l'identifiant et la version pour vérifier l'installation.
+cp "$ROOT/premiere-panel/plugin/manifest.json" "$APP/Contents/Resources/PremierePanel-manifest.json"
+
 cat > "$APP/Contents/Info.plist" <<'PLIST'
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -40,6 +45,7 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
     <key>LSApplicationCategoryType</key><string>public.app-category.video</string>
     <key>NSHighResolutionCapable</key><true/>
     <key>CFBundleDevelopmentRegion</key><string>fr</string>
+    <key>CFBundleLocalizations</key><array><string>fr</string><string>en</string></array>
     <key>CFBundleDocumentTypes</key>
     <array>
         <dict>
