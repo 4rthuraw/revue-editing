@@ -1,9 +1,12 @@
 #!/bin/zsh
 # Construit dist/Revue Montage.app (release, signée localement).
+# Usage : ./scripts/build-app.sh            (version par défaut)
+#         VERSION=1.2.0 ./scripts/build-app.sh
 set -euo pipefail
 
 ROOT="${0:A:h:h}"
 APP="$ROOT/dist/Revue Montage.app"
+VERSION="${VERSION:-1.0.0}"
 cd "$ROOT"
 
 echo "→ Vérifications de NotesCore"
@@ -28,7 +31,7 @@ echo "→ Panneau Premiere embarqué (installé depuis les Réglages de l'app)"
 # Copie du manifeste : l'app y lit l'identifiant et la version pour vérifier l'installation.
 cp "$ROOT/premiere-panel/plugin/manifest.json" "$APP/Contents/Resources/PremierePanel-manifest.json"
 
-cat > "$APP/Contents/Info.plist" <<'PLIST'
+cat > "$APP/Contents/Info.plist" <<PLIST
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -39,8 +42,8 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
     <key>CFBundleExecutable</key><string>RevueMontage</string>
     <key>CFBundleIconFile</key><string>AppIcon</string>
     <key>CFBundlePackageType</key><string>APPL</string>
-    <key>CFBundleShortVersionString</key><string>1.0</string>
-    <key>CFBundleVersion</key><string>1</string>
+    <key>CFBundleShortVersionString</key><string>${VERSION}</string>
+    <key>CFBundleVersion</key><string>${VERSION}</string>
     <key>LSMinimumSystemVersion</key><string>14.0</string>
     <key>LSApplicationCategoryType</key><string>public.app-category.video</string>
     <key>NSHighResolutionCapable</key><true/>
@@ -60,5 +63,5 @@ cat > "$APP/Contents/Info.plist" <<'PLIST'
 PLIST
 
 codesign --force --deep --sign - "$APP"
-echo "✓ $APP"
+echo "✓ $APP (version $VERSION)"
 echo "  Pour l'installer : glisse-la dans /Applications."

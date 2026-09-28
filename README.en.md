@@ -44,18 +44,28 @@ all that's left is to work through them one by one.
 
 ## Installation
 
-**You need:** a Mac running **macOS 14 Sonoma** or later, and Apple's command line developer tools
-(run `xcode-select --install` in Terminal if you don't have them).
+**You need:** a Mac with Apple silicon (M1 or later) running **macOS 14 Sonoma** or later.
+
+1. Download **`RevueMontage-x.y.z.dmg`** from the [latest Release](https://github.com/4rthuraw/revue-editing/releases/latest).
+2. Open the `.dmg` and drag **Revue Montage** into the **Applications** folder.
+3. **First launch**: macOS says the app couldn't be verified. That's expected: the app is free and isn't signed
+   with a paid Apple developer account. Open **System Settings → Privacy & Security**, scroll down to the message
+   about Revue Montage and click **Open Anyway**. You only need to do this once.
+4. **For Premiere Pro** (25.6 or later): in the app, open **Settings (⌘,) → General → Premiere Pro → Install**,
+   then restart Premiere. The "Import Notes" panel ships inside the app.
+
+### From source
+
+You'll also need Apple's command line developer tools (`xcode-select --install` in Terminal).
 
 ```bash
 git clone https://github.com/4rthuraw/revue-editing.git
 cd revue-editing
 ./scripts/build-app.sh          # builds dist/Revue Montage.app → drag it into Applications
+./scripts/make-dmg.sh           # (optional) creates dist/RevueMontage-x.y.z.dmg for a Release
 ```
 
-**For Premiere Pro** (25.6 or later): in the app, open **Settings (⌘,) → General → Premiere Pro → Install**.
-The "Import Notes" panel ships inside the app; just restart Premiere afterwards.
-(For developers: `./premiere-panel/install.sh` does the same from the source code.)
+`./premiere-panel/install.sh` installs the Premiere panel straight from the source code.
 
 ## During the review
 
